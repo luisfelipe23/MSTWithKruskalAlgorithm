@@ -1,4 +1,6 @@
-﻿namespace MSTWithKruskalAlgorithm
+﻿using System;
+
+namespace MSTWithKruskalAlgorithm
 {
     public class GraphImplementation : GraphBase
     {
@@ -9,7 +11,28 @@
             GenerateEmptyMatrix(numVertices);
         }
 
-        public override void AddEdge(int v1, int v2, int weight)
+        public override void AddMatrixEdges(int edgesNumber)
+        {
+            Random random = new Random();
+            int countEdges = CountEdges() / 2;
+
+            for(int i = 0; i < this.NumVertices; i++)
+            {
+                for (int j = 0; j < this.NumVertices; j++)
+                {
+                    if (countEdges < edgesNumber)
+                    {
+                        if (random.NextDouble() > 0.8)
+                        {
+                            AddEdge(i, j, random.Next(1, 10));
+                            countEdges++;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void AddEdge(int v1, int v2, int weight)
         {
             if (v1 >= this.NumVertices || v2 >= this.NumVertices || v1 < 0 || v2 < 0)
                 throw new ArgumentOutOfRangeException("Vertices are out of bounds");
@@ -67,6 +90,20 @@
                     Matrix[i, j] = 0;
                 }
             }
+        }
+
+        public override int CountEdges()
+        {
+            int count = 0;
+
+            for (int i = 0; i < this.NumVertices; i++) {
+                for (int j = 0; j < this.NumVertices; j++) {
+                    if (this.Matrix[i, j] != 0)
+                        count++;
+                }
+            }
+
+            return count;
         }
     }
 }

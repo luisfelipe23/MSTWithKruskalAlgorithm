@@ -9,12 +9,14 @@
             this.NumVertices = numVertices;
         }
 
-        public abstract void AddEdge(int v1, int v2, int weight);
+        public abstract void AddMatrixEdges(int edgesNumber);
 
         public abstract IEnumerable<int> GetAdjacentVertices(int v);
 
         public abstract int GetEdgeWeight(int v1, int v2);
 
         public abstract void Display();
+
+        public abstract int CountEdges();
     }
 }

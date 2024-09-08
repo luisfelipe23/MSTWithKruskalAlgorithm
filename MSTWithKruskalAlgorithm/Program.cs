@@ -9,18 +9,10 @@ class Program
 
         var adjMatrixGraph = new GraphImplementation(int.Parse(graphInformation[0]));
 
-        Random random = new Random();
-
-        for (int i = 0; i < int.Parse(graphInformation[0]); i++)
+        do
         {
-            for (int j = 0; j < int.Parse(graphInformation[0]); j++)
-            {
-                if (random.NextDouble() > 0.5)
-                {
-                    adjMatrixGraph.AddEdge(i, j, random.Next(1, 10));
-                }
-            }
-        }
+            adjMatrixGraph.AddMatrixEdges(int.Parse(graphInformation[1]));
+        } while ((adjMatrixGraph.CountEdges() / 2) < int.Parse(graphInformation[1]));
 
         adjMatrixGraph.Display();
     }
