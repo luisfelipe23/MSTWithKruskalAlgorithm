@@ -4,19 +4,24 @@ class Program
 {
     static void Main(string[] args)
     {
-        var adjMatrixGraph = new GraphImplementation(9);
-        adjMatrixGraph.AddEdge(0, 8, 2);
-        adjMatrixGraph.AddEdge(0, 3, 3);
-        adjMatrixGraph.AddEdge(8, 4, 4);
+        string data = ReadFile.Reader("C:\\Users\\userl\\source\\repos\\MSTWithKruskalAlgorithm\\MSTWithKruskalAlgorithm\\EdgesFile.txt");
+        string[] graphInformation = data.Split('\n');
+
+        var adjMatrixGraph = new GraphImplementation(int.Parse(graphInformation[0]));
+
+        Random random = new Random();
+
+        for (int i = 0; i < int.Parse(graphInformation[0]); i++)
+        {
+            for (int j = 0; j < int.Parse(graphInformation[0]); j++)
+            {
+                if (random.NextDouble() > 0.5)
+                {
+                    adjMatrixGraph.AddEdge(i, j, random.Next(1, 10));
+                }
+            }
+        }
 
         adjMatrixGraph.Display();
-        Console.WriteLine();
-
-        var adjacent = adjMatrixGraph.GetAdjacentVertices(8);
-
-        foreach (int vertex in adjacent)
-        {
-            Console.WriteLine(vertex);
-        }
     }
 }

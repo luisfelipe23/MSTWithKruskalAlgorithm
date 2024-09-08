@@ -14,10 +14,11 @@
             if (v1 >= this.NumVertices || v2 >= this.NumVertices || v1 < 0 || v2 < 0)
                 throw new ArgumentOutOfRangeException("Vertices are out of bounds");
 
-            if (weight < 1) throw new ArgumentException("Weight cannot be less than 1");
-
-            this.Matrix[v1, v2] = weight;
-            this.Matrix[v2, v1] = weight;
+            if (v1 != v2 && weight != this.Matrix[v1, v2])
+            {
+                this.Matrix[v1, v2] = weight;
+                this.Matrix[v2, v1] = weight;
+            }
         }
 
         public override void Display()
