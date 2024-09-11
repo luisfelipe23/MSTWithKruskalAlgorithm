@@ -4,7 +4,7 @@ namespace MSTWithKruskalAlgorithm
 {
     public class GraphImplementation : GraphBase
     {
-        int[,] Matrix;
+        decimal[,] Matrix;
 
         public GraphImplementation(int numVertices) : base(numVertices)
         {
@@ -32,7 +32,7 @@ namespace MSTWithKruskalAlgorithm
             }
         }
 
-        private void AddEdge(int v1, int v2, int weight)
+        public override void AddEdge(int v1, int v2, decimal weight)
         {
             if (v1 >= this.NumVertices || v2 >= this.NumVertices || v1 < 0 || v2 < 0)
                 throw new ArgumentOutOfRangeException("Vertices are out of bounds");
@@ -50,7 +50,7 @@ namespace MSTWithKruskalAlgorithm
             {
                 for (int j = 0; j < this.NumVertices; j++)
                 {
-                    Console.Write(this.Matrix[i, j]);
+                    Console.Write(this.Matrix[i, j].ToString("0.0"));
                     Console.Write("  ");
                 }
                 Console.WriteLine();
@@ -71,7 +71,7 @@ namespace MSTWithKruskalAlgorithm
 
         }
 
-        public override int GetEdgeWeight(int v1, int v2)
+        public override decimal GetEdgeWeight(int v1, int v2)
         {
             if (v1 >= this.NumVertices || v2 >= this.NumVertices || v1 < 0 || v2 < 0)
                 throw new ArgumentOutOfRangeException("Vertices are out of bounds");
@@ -81,13 +81,13 @@ namespace MSTWithKruskalAlgorithm
 
         private void GenerateEmptyMatrix(int numVertices)
         {
-            this.Matrix = new int[numVertices, numVertices];
+            this.Matrix = new decimal[numVertices, numVertices];
 
             for (int i = 0; i < numVertices; i++)
             {
                 for (int j = 0; j < numVertices; j++)
                 {
-                    Matrix[i, j] = 0;
+                    Matrix[i, j] = 0M;
                 }
             }
         }

@@ -4,15 +4,17 @@ class Program
 {
     static void Main(string[] args)
     {
-        string data = ReadFile.Reader("C:\\Users\\userl\\source\\repos\\MSTWithKruskalAlgorithm\\MSTWithKruskalAlgorithm\\EdgesFile.txt");
+        string data = ReadFile.Reader("EdgesFile.txt");
         string[] graphInformation = data.Split('\n');
 
         var adjMatrixGraph = new GraphImplementation(int.Parse(graphInformation[0]));
 
-        do
+        for (int i = 2; i < graphInformation.Length - 1; i++)
         {
-            adjMatrixGraph.AddMatrixEdges(int.Parse(graphInformation[1]));
-        } while ((adjMatrixGraph.CountEdges() / 2) < int.Parse(graphInformation[1]));
+            string[] graphEdge = graphInformation[i].Split(' ');
+
+            adjMatrixGraph.AddEdge(int.Parse(graphEdge[0]), int.Parse(graphEdge[1]), decimal.Parse(graphEdge[2], System.Globalization.CultureInfo.InvariantCulture));
+        }
 
         adjMatrixGraph.Display();
     }

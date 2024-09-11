@@ -1,4 +1,6 @@
-﻿namespace MSTWithKruskalAlgorithm
+﻿using System.IO;
+
+namespace MSTWithKruskalAlgorithm
 {
     public class ReadFile
     {
@@ -10,7 +12,11 @@
 
             try
             {
-                streamReader = new StreamReader(path);
+                string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                string projectDir = Directory.GetParent(baseDir).Parent.Parent.Parent.FullName;
+                string fullPath = Path.Combine(projectDir, path);
+
+                streamReader = new StreamReader(fullPath);
                 data = streamReader.ReadLine();
 
                 while (data != null)
