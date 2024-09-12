@@ -32,7 +32,11 @@
             {
                 for (int j = 0; j < this.NumVertices; j++)
                 {
-                    Console.Write(this.Matrix[i, j].ToString("0.0"));
+                    if (this.Matrix[i, j] >= 0)
+                        Console.Write(" " + this.Matrix[i, j].ToString("0.0"));
+                    else
+                        Console.Write(this.Matrix[i, j].ToString("0.0"));
+
                     Console.Write("  ");
                 }
                 Console.WriteLine();
@@ -54,7 +58,7 @@
             return matriz;
         }
 
-        public List<Edge> MST_Kruskal(List<Edge> edges)
+        public List<Edge> MST_Kruskal(List<Edge> edges, int numEdges)
         {
             List<Edge> mst = new List<Edge>();
             edges = edges.OrderBy(edge => edge.Weight).ToList();
@@ -66,15 +70,22 @@
             int index = 0;
             while (edgeCount < this.NumVertices - 1)
             {
-                Edge nextEdge = edges[index++];
-                int x = FindParent(parent, nextEdge.Source);
-                int y = FindParent(parent, nextEdge.Destination);
-                if (x != y)
+                index += 1;
+
+                if (index < numEdges)
                 {
-                    mst.Add(nextEdge);
-                    Union(parent, x, y);
-                    edgeCount++;
+                    Edge nextEdge = edges[index];
+                    int x = FindParent(parent, nextEdge.Source);
+                    int y = FindParent(parent, nextEdge.Destination);
+                    if (x != y)
+                    {
+                        mst.Add(nextEdge);
+                        Union(parent, x, y);
+                        edgeCount++;
+                    }
                 }
+                else
+                    break;
             }
 
             return mst;

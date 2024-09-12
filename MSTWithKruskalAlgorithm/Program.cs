@@ -1,10 +1,11 @@
 ﻿using MSTWithKruskalAlgorithm;
+using System.Diagnostics;
 
 class Program
 {
     static void Main(string[] args)
     {
-        string data = ReadFile.Reader("EdgesFile.txt");
+        /*string data = ReadFile.Reader("EdgesFile.txt");
         string[] graphInformation = data.Split('\n');
 
         var adjMatrixGraph = new GraphImplementation(int.Parse(graphInformation[0]));
@@ -25,6 +26,29 @@ class Program
         foreach (Edge m in mst)
         {
             Console.WriteLine($"{m.Source} - {m.Destination}: {m.Weight}");
-        }
+        }*/
+
+        Stopwatch stopwatch = new Stopwatch();
+        stopwatch.Start();
+
+        int count = 0;
+        int numVertices = 15;
+        int numEdges = 100;
+
+        do
+        {
+            var adjMatrixGraph = new GraphImplementation(numVertices);
+
+            List<Edge> edges = new List<Edge>();
+            edges = GraphGenerator.GenerateRandomGraph(numVertices, numEdges);
+
+            List<Edge> mst = adjMatrixGraph.MST_Kruskal(edges, numEdges);
+
+            count++;
+        } while (count < 10) ;
+
+        stopwatch.Stop();
+
+        Console.WriteLine("Tempo decorrido: {0} ms", stopwatch.ElapsedMilliseconds);
     }
 }
