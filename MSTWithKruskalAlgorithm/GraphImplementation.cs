@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MSTWithKruskalAlgorithm
+﻿namespace MSTWithKruskalAlgorithm
 {
     public class GraphImplementation : GraphBase
     {
@@ -8,28 +6,7 @@ namespace MSTWithKruskalAlgorithm
 
         public GraphImplementation(int numVertices) : base(numVertices)
         {
-            GenerateEmptyMatrix(numVertices);
-        }
-
-        public override void AddMatrixEdges(int edgesNumber)
-        {
-            Random random = new Random();
-            int countEdges = CountEdges() / 2;
-
-            for(int i = 0; i < this.NumVertices; i++)
-            {
-                for (int j = 0; j < this.NumVertices; j++)
-                {
-                    if (countEdges < edgesNumber)
-                    {
-                        if (random.NextDouble() > 0.8)
-                        {
-                            AddEdge(i, j, random.Next(1, 10));
-                            countEdges++;
-                        }
-                    }
-                }
-            }
+            this.Matrix = GenerateEmptyMatrix(this.Matrix, numVertices);
         }
 
         public override void AddEdge(int v1, int v2, decimal weight)
@@ -44,8 +21,13 @@ namespace MSTWithKruskalAlgorithm
             }
         }
 
-        public override void Display()
+        public override void Display(List<Edge> edges)
         {
+            foreach (Edge edge in edges)
+            {
+                AddEdge(edge.Source, edge.Destination, edge.Weight);
+            }
+
             for (int i = 0; i < this.NumVertices; i++)
             {
                 for (int j = 0; j < this.NumVertices; j++)
@@ -57,53 +39,59 @@ namespace MSTWithKruskalAlgorithm
             }
         }
 
-        public override IEnumerable<int> GetAdjacentVertices(int v)
+        private decimal[,] GenerateEmptyMatrix(decimal[,] matriz, int numVertices)
         {
-            if (v < 0 || v >= this.NumVertices) throw new ArgumentOutOfRangeException("Cannot access vertex");
-
-            List<int> adjacentVertices = new List<int>();
-            for (int i = 0; i < this.NumVertices; i++)
-            {
-                if (this.Matrix[v, i] > 0)
-                    adjacentVertices.Add(i);
-            }
-            return adjacentVertices;
-
-        }
-
-        public override decimal GetEdgeWeight(int v1, int v2)
-        {
-            if (v1 >= this.NumVertices || v2 >= this.NumVertices || v1 < 0 || v2 < 0)
-                throw new ArgumentOutOfRangeException("Vertices are out of bounds");
-
-            return this.Matrix[v1, v2];
-        }
-
-        private void GenerateEmptyMatrix(int numVertices)
-        {
-            this.Matrix = new decimal[numVertices, numVertices];
+            matriz = new decimal[numVertices, numVertices];
 
             for (int i = 0; i < numVertices; i++)
             {
                 for (int j = 0; j < numVertices; j++)
                 {
-                    Matrix[i, j] = 0M;
+                    matriz[i, j] = 0M;
                 }
             }
+
+            return matriz;
         }
 
-        public override int CountEdges()
+        public List<Edge> MST_Kruskal(List<Edge> edges)
         {
-            int count = 0;
+            List<Edge> mst = new List<Edge>();
+            edges = edges.OrderBy(edge => edge.Weight).ToList();
 
-            for (int i = 0; i < this.NumVertices; i++) {
-                for (int j = 0; j < this.NumVertices; j++) {
-                    if (this.Matrix[i, j] != 0)
-                        count++;
+            int[] parent = new int[this.NumVertices];
+            for (int i = 0; i < this.NumVertices; i++)
+                parent[i] = -1;
+            int edgeCount = 0;
+            int index = 0;
+            while (edgeCount < this.NumVertices - 1)
+            {
+                Edge nextEdge = edges[index++];
+                int x = FindParent(parent, nextEdge.Source);
+                int y = FindParent(parent, nextEdge.Destination);
+                if (x != y)
+                {
+                    mst.Add(nextEdge);
+                    Union(parent, x, y);
+                    edgeCount++;
                 }
             }
 
-            return count;
+            return mst;
+        }
+
+        private int FindParent(int[] parent, int vertex)
+        {
+            if (parent[vertex] == -1)
+                return vertex;
+            return FindParent(parent, parent[vertex]);
+        }
+
+        private void Union(int[] parent, int x, int y)
+        {
+            int xSet = FindParent(parent, x);
+            int ySet = FindParent(parent, y);
+            parent[xSet] = ySet;
         }
     }
 }
