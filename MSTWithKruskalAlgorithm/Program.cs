@@ -23,6 +23,12 @@ class Program
         adjMatrixGraph.Display(edges);
 
         Console.WriteLine();
+        foreach (Edge e in edges)
+        {
+            Console.WriteLine($"{e.Source} - {e.Destination}: {e.Weight}");
+        }
+
+        Console.WriteLine();
         List<Edge> mst = adjMatrixGraph.MST_Kruskal(edges, int.Parse(graphInformation[1]));
 
         foreach (Edge m in mst)

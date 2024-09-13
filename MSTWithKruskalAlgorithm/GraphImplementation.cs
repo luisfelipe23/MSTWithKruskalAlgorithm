@@ -73,11 +73,9 @@
 
             while (edgeCount < this.NumVertices - 1)
             {
-                index += 1;
-
                 if (index < numEdges)
                 {
-                    Edge nextEdge = edges[index];
+                    Edge nextEdge = edges[index++];
 
                     int x = FindParent(parent, nextEdge.Source);
                     int y = FindParent(parent, nextEdge.Destination);
