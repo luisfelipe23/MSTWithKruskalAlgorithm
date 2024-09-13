@@ -73,6 +73,8 @@ class Program
                 count++;
             } while (count < 10);
 
+            count = 0;
+
             stopwatch.Stop();
 
             Console.WriteLine($"Number Of Vertices: {numVertices}");
