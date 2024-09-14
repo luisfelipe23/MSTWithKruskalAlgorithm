@@ -52,8 +52,7 @@ class Program
 
         while (index < verticesNumbers.Length)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+            List<long> elapsedTimes = new List<long>();
 
             if (updateVerticesIndex) 
                 numVertices = verticesNumbers[index++];
@@ -63,6 +62,9 @@ class Program
 
             do
             {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
                 var adjacentMatrixGraph = new GraphImplementation(numVertices);
 
                 List<Edge> newEdges = new List<Edge>();
@@ -70,17 +72,22 @@ class Program
 
                 List<Edge> newMst = adjacentMatrixGraph.MST_Kruskal(newEdges, numEdges);
 
+                stopwatch.Stop();
+
+                elapsedTimes.Add(stopwatch.ElapsedMilliseconds);
                 count++;
             } while (count < 10);
 
             count = 0;
 
-            stopwatch.Stop();
+            double average = elapsedTimes.Average(x => (double)x);
 
             Console.WriteLine($"Number Of Vertices: {numVertices}");
             Console.WriteLine($"Number Of Edges: {numEdges}");
-            Console.WriteLine("Elapsed Time: {0} ms", stopwatch.ElapsedMilliseconds);
+            Console.WriteLine("Average Elapsed Time: {0} ms", average);
             Console.WriteLine();
+
+            elapsedTimes.Clear();
 
             if (numVertices == 500)
             {
