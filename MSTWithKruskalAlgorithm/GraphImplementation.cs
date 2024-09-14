@@ -58,25 +58,28 @@
             return matriz;
         }
 
-        public List<Edge> MST_Kruskal(List<Edge> edges, int numEdges)
+        public override List<Edge> MST_Kruskal(List<Edge> edges, int numEdges)
         {
             List<Edge> mst = new List<Edge>();
             edges = edges.OrderBy(edge => edge.Weight).ToList();
 
             int[] parent = new int[this.NumVertices];
+
             for (int i = 0; i < this.NumVertices; i++)
                 parent[i] = -1;
+
             int edgeCount = 0;
             int index = 0;
+
             while (edgeCount < this.NumVertices - 1)
             {
-                index += 1;
-
                 if (index < numEdges)
                 {
-                    Edge nextEdge = edges[index];
+                    Edge nextEdge = edges[index++];
+
                     int x = FindParent(parent, nextEdge.Source);
                     int y = FindParent(parent, nextEdge.Destination);
+
                     if (x != y)
                     {
                         mst.Add(nextEdge);
@@ -95,6 +98,7 @@
         {
             if (parent[vertex] == -1)
                 return vertex;
+
             return FindParent(parent, parent[vertex]);
         }
 
@@ -102,6 +106,7 @@
         {
             int xSet = FindParent(parent, x);
             int ySet = FindParent(parent, y);
+
             parent[xSet] = ySet;
         }
     }

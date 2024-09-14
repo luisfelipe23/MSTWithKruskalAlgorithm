@@ -12,5 +12,7 @@
         public abstract void AddEdge(int v1, int v2, decimal weight);
 
         public abstract void Display(List<Edge> edges);
+
+        public abstract List<Edge> MST_Kruskal(List<Edge> edges, int numEdges);
     }
 }
