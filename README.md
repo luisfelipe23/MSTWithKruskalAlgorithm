@@ -13,15 +13,15 @@ Our program is basically divided into two parts:
 <br>
 
 * The **second part** consists of a set of performance testes;
-  *  Basically, there are generated a previously defined quantity of **random graphs**. These graphs also have their **number of vertices** and **number of edges** previously defined. The **weight** is a randommically value generated;
+  *  Basically, it's generated a previously defined quantity of **random graphs**. These graphs also have their **number of vertices** and **number of edges** previously defined. The **weight** is a randommically value generated;
   *  After generating the graphs, their **MSTs** are also generated;
-  *  The application ends showing the **elapsed time** of each realized test.
+  *  The application ends showing the **average elapsed time** of each realized test.
 
 ## How to use
 
 * First, we will need to inform a valid information about a graph in the file. 
 * In this example, we used the graph below, with 7 vertex and 11 edges.
-  * So the first line of the file will have the file 7, the second value 11 and the other lines will have the information of the vertices and the weight of the edge between them.
+  * So the first line of the file will have the file 7, the second line the value 11 and the other lines will have the information of the vertices and the weight of the edge between them.
   * The quantity of lines with information of the vertices and weight must be the same value of edges of the graph that was informed in the second line.
  
 ![Graph with 7 vertices and 11 edges](https://i.imgur.com/U7seauW.png) 
